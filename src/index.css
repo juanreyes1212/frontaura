@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #0d0f14;
+  --color-surface: #141820;
+  --color-surface-up: #1a2030;
+  --color-surface-dn: #0a0c10;
+  --color-border: #1e2840;
+  --color-cyan: #00e5ff;
+  --color-cyan-dim: #006d7a;
+  --color-green: #39ff14;
+  --color-green-dim: #1a7a0a;
+  --color-amber: #ff9f1c;
+  --color-amber-dim: #7a4a00;
+  --color-red: #ff3860;
+  --color-text: #c8d6e5;
+  --color-text-muted: #5a6a7a;
+  --color-text-dim: #3a4a5a;
+
+  --font-family-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  --font-family-sans: "Inter", system-ui, sans-serif;
+
+  --shadow-neu: 6px 6px 12px #080a0f, -6px -6px 12px #1e2433;
+  --shadow-neu-sm: 3px 3px 6px #080a0f, -3px -3px 6px #1e2433;
+  --shadow-neu-inset: inset 4px 4px 8px #080a0f, inset -4px -4px 8px #1e2433;
+  --shadow-neu-inset-sm: inset 2px 2px 4px #080a0f, inset -2px -2px 4px #1e2433;
+  --shadow-glow-cyan: 0 0 8px #00e5ff55, 0 0 20px #00e5ff22;
+  --shadow-glow-green: 0 0 8px #39ff1455, 0 0 20px #39ff1422;
+  --shadow-glow-amber: 0 0 8px #ff9f1c55, 0 0 20px #ff9f1c22;
+
+  --animate-flicker: flicker 8s infinite;
+  --animate-scan: scan 6s linear infinite;
+  --animate-pulse-slow: pulse 3s ease-in-out infinite;
+}
+
+/* ─── Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-text);
+  font-family: var(--font-family-sans);
+  min-height: 100vh;
+  background-image: radial-gradient(ellipse at center, #141820 0%, #0d0f14 70%);
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0d0f14; }
+::-webkit-scrollbar-thumb { background: #1e2840; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #00e5ff33; }
+
+::selection { background: #00e5ff33; color: #c8d6e5; }
+
+/* ─── Neumorphic surfaces ───────────────────────────── */
+.neu {
+  background: #141820;
+  box-shadow: 6px 6px 12px #080a0f, -6px -6px 12px #1e2433;
+  border-radius: 12px;
+}
+.neu-sm {
+  background: #141820;
+  box-shadow: 3px 3px 6px #080a0f, -3px -3px 6px #1e2433;
+  border-radius: 8px;
+}
+.neu-inset {
+  background: #141820;
+  box-shadow: inset 4px 4px 8px #080a0f, inset -4px -4px 8px #1e2433;
+  border-radius: 12px;
+}
+.neu-inset-sm {
+  background: #141820;
+  box-shadow: inset 2px 2px 4px #080a0f, inset -2px -2px 4px #1e2433;
+  border-radius: 8px;
+}
+
+/* ─── CRT effects ───────────────────────────────────── */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* Slow scan line across the screen */
+.crt-scan::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, #00e5ff18, transparent);
+  animation: scan 8s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Phosphor glow text ────────────────────────────── */
+.glow-cyan  { text-shadow: 0 0 8px #00e5ff99, 0 0 20px #00e5ff44; color: #00e5ff; }
+.glow-green { text-shadow: 0 0 8px #39ff1499, 0 0 20px #39ff1444; color: #39ff14; }
+.glow-amber { text-shadow: 0 0 8px #ff9f1c99, 0 0 20px #ff9f1c44; color: #ff9f1c; }
+
+/* ─── Buttons ───────────────────────────────────────── */
+.btn {
+  background: #141820;
+  box-shadow: 3px 3px 6px #080a0f, -3px -3px 6px #1e2433;
+  border-radius: 8px;
+  padding: 0.375rem 1rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  transition: all 150ms;
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+}
+.btn:active {
+  box-shadow: inset 2px 2px 4px #080a0f, inset -2px -2px 4px #1e2433;
+  transform: scale(0.98);
+}
+
+.btn-cyan { color: #00e5ff; border-color: #006d7a; }
+.btn-cyan:hover {
+  border-color: #00e5ff;
+  box-shadow: 3px 3px 6px #080a0f, -3px -3px 6px #1e2433, 0 0 12px #00e5ff33;
+}
+
+.btn-green { color: #39ff14; border-color: #1a7a0a; }
+.btn-green:hover {
+  border-color: #39ff14;
+  box-shadow: 3px 3px 6px #080a0f, -3px -3px 6px #1e2433, 0 0 12px #39ff1433;
+}
+
+/* ─── Badges ────────────────────────────────────────── */
+.badge {
+  font-family: var(--font-family-mono);
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  display: inline-block;
+}
+.badge-critical { color: #ff3860; border-color: rgba(255,56,96,.4); background: rgba(255,56,96,.08); }
+.badge-high     { color: #ff9f1c; border-color: rgba(255,159,28,.4); background: rgba(255,159,28,.08); }
+.badge-medium   { color: #00e5ff; border-color: rgba(0,229,255,.4); background: rgba(0,229,255,.08); }
+
+/* ─── Progress track ────────────────────────────────── */
+.progress-track {
+  box-shadow: inset 2px 2px 4px #080a0f, inset -2px -2px 4px #1e2433;
+  border-radius: 9999px;
+  height: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  background: #141820;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #00e5ff, #39ff14);
+  box-shadow: 0 0 6px #00e5ff88;
+  transition: width 700ms ease-out;
+}
+
+/* ─── Nav links ─────────────────────────────────────── */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  color: #5a6a7a;
+  transition: all 150ms;
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav-link:hover {
+  color: #c8d6e5;
+  background: #1a2030;
+  box-shadow: inset 2px 2px 4px #080a0f, inset -2px -2px 4px #1e2433;
+}
+.nav-link.active {
+  color: #00e5ff;
+  background: #141820;
+  box-shadow: inset 3px 3px 6px #080a0f, inset -3px -3px 6px #1e2433, 0 0 8px #00e5ff22;
+}
+
+/* ─── Keyframes ─────────────────────────────────────── */
+@keyframes scan {
+  0%   { top: -3px; }
+  100% { top: 100vh; }
+}
+@keyframes flicker {
+  0%, 89%, 91%, 94%, 100% { opacity: 1; }
+  90%  { opacity: 0.88; }
+  93%  { opacity: 0.94; }
+}
