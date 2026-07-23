@@ -100,13 +100,6 @@ interface ProjectCardProps {
 }
 
 function ProjectCard({ phaseNumber, project, topicTitle, color, completed, onToggle, onView }: ProjectCardProps) {
-  const PRIORITY_BADGE: Record<string, string> = {
-    Critical: 'badge-critical',
-    High: 'badge-high',
-    Medium: 'badge-medium',
-    'Nice-to-Have': 'badge text-text-dim border-border',
-  }
-
   return (
     <div className={`neu p-4 group transition-all duration-150 ${completed ? 'opacity-70' : 'hover:shadow-glow-cyan'}`}>
       <div className="flex items-start gap-3">
